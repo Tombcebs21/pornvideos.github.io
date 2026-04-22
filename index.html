@@ -135,6 +135,13 @@ header a {
   color: #ff6a00;
   display: none;
 }
+
+  .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
 </style>
 </head>
 
@@ -169,7 +176,7 @@ const videos = [
   { titulo: "SWEETIE FOX - SCARLET WITCH", url: "https://hqq.ac/e/dFVod0sraTNlTnp4TTFabXA0YlBpUT09", actriz: "sweetie fox", letra: "s", img: "https://i0.wp.com/s1.netu.tv/flv/api/files/thumbs_new/2026/04/22/1776891249xzrwd/1776891249xzrwd-640x480-1.jpg" },
   { titulo: "SWEETIE FOX - TSUYU ASUI", url: "https://hqq.ac/e/TlpyQmtjRzFVWWRSVjhHeTJnVFhxUT09", actriz: "sweetie fox", letra: "t", img: "https://i0.wp.com/s13.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776891936vwfpr/1776891936vwfpr-640x480-1.jpg" },
   { titulo: "SWEETIE FOX - LOLA BUNNY", url: "https://hqq.ac/e/VTh5bjFhNzZSZnRVZzByV1plcmc5Zz09", actriz: "sweetie fox", letra: "l", img: "https://i0.wp.com/s5.netu.tv/flv/api/files/thumbs_new/2026/04/23/177689181220cbu/177689181220cbu-640x480-1.jpg" },
-  { titulo: "SWEETIE FOX - ALBEDO", url: "", actriz: "sweetie fox", letra: "a", img: "" },
+  { titulo: "SWEETIE FOX - ALBEDO", url: "https://hqq.ac/e/V3BySEh0ditPUlg1VTQzZ3BZQW1Xdz09", actriz: "sweetie fox", letra: "a", img: "" },
   { titulo: "SWEETIE FOX - CHUN LEE", url: "https://hqq.ac/e/MXJpaHVZdDRlNjdOY1Bab0Z6enhjUT09", actriz: "sweetie fox", letra: "c", img: "https://i0.wp.com/s11.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776893125nmgg6/1776893125nmgg6-640x480-1.jpg" },
   { titulo: "SWEETIE FOX - ANKHA", url: "https://hqq.ac/e/c3c3UDJ4NVcrS0lCc0JJOEYwcitIZz09", actriz: "sweetie fox", letra: "a", img: "https://i0.wp.com/s13.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776892809xd2g2/1776892809xd2g2-640x480-1.jpg" },
   { titulo: "SWEETIE FOX - ZELDA", url: "https://hqq.ac/e/Qzc4TFVzS2RFL2R0WEkxWWJJUnAydz09", actriz: "sweetie fox", letra: "z", img: "https://i0.wp.com/s11.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776893088510l6/1776893088510l6-640x480-1.jpg" },
@@ -196,7 +203,9 @@ function render(filter = "") {
   ordenados.forEach(v => {
     list.innerHTML += `
       <div class="item" onclick="openVideo('${v.url}', '${v.actriz}')">
-        <div class="thumb">${v.img}</div>
+        <div class="thumb">
+  <img src="${v.img}" alt="${v.titulo}">
+</div>
         <div class="title">${v.titulo}</div>
       </div>
     `;
