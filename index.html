@@ -1,28 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Mi Biblioteca</title>
+<meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0a0a0a;
+  color: white;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 25px;
+  font-size: 30px;
+  color: #ff6a00;
+  text-shadow: 0 0 12px #ff6a00;
+  border-bottom: 1px solid #222;
+}
+
+/* CONTENEDOR */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* VIDEO CARD */
+.video {
+  margin-bottom: 35px;
+  border: 1px solid #ff6a00;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 18px rgba(255, 106, 0, 0.25);
+  transition: 0.3s;
+}
+
+.video:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 25px rgba(255, 106, 0, 0.5);
+}
+
+/* IFRAME */
+.video iframe {
+  width: 100%;
+  height: 450px;
+  border: none;
+}
+
+/* TITULO */
+.label {
+  padding: 10px;
+  background: #111;
+  color: #ff6a00;
+  font-size: 14px;
+  border-top: 1px solid #ff6a00;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Mis Videos</h1>
-<a href="https://filemoon.org/en/QN9mEnQL36dW/file">Sweetie fox chel from the road to el dorado gives her pussy hard fuck watch online.mp4</a>
-<button onclick="verVideo()">Ver video</button>
+<header>🎬 Mi Biblioteca Neon</header>
 
-<div id="player"></div>
+<div class="container" id="videos"></div>
 
 <script>
-function verVideo() {
-  document.getElementById("player").innerHTML = `
-    <iframe 
-      src="https://filemoon.org/en/QN9mEnQL36dW/file"
-      width="800" 
-      height="450" 
-      frameborder="0" 
-      allowfullscreen>
-    </iframe>
+// 📦 EDITÁ SOLO ESTA LISTA
+const videos = [
+  {
+    titulo: "SWEETIE FOX - CHEEL",
+    url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09"
+  },
+  {
+    titulo: "SWEETIE FOX - RAVEN",
+    url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09"
+  }
+];
+
+// 📺 RENDER AUTOMÁTICO
+const contenedor = document.getElementById("videos");
+
+videos.forEach(v => {
+  contenedor.innerHTML += `
+    <div class="video">
+      <iframe src="${v.url}" allowfullscreen></iframe>
+      <div class="label">${v.titulo}</div>
+    </div>
   `;
-}
+});
 </script>
 
 </body>
