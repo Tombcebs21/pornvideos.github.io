@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mi Biblioteca</title>
+</head>
+<body>
+
+<h1>Mis Videos</h1>
+
+<button onclick="verVideo()">Ver video</button>
+
+<div id="player"></div>
+
+<script>
+function verVideo() {
+  document.getElementById("player").innerHTML = `
+    <iframe 
+      src="https://filemoon.org/en/QN9mEnQL36dW/file"
+      width="800" 
+      height="450" 
+      frameborder="0" 
+      allowfullscreen>
+    </iframe>
+  `;
+}
+</script>
+
+</body>
+</html>
