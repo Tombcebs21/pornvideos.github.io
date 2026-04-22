@@ -15,83 +15,152 @@ body {
 /* HEADER */
 header {
   text-align: center;
-  padding: 25px;
+  padding: 20px;
   font-size: 30px;
   color: #ff6a00;
   text-shadow: 0 0 12px #ff6a00;
   border-bottom: 1px solid #222;
 }
 
-/* CONTENEDOR */
+/* BUSCADOR */
+.search-box {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+.search-box input {
+  width: 80%;
+  max-width: 600px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ff6a00;
+  background: #111;
+  color: white;
+  outline: none;
+}
+
+/* PLAYER */
+.player {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  display: none;
+}
+
+.player iframe {
+  width: 100%;
+  height: 450px;
+  border: 2px solid #ff6a00;
+  border-radius: 10px;
+}
+
+/* LISTA */
 .container {
   max-width: 900px;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-/* VIDEO CARD */
-.video {
-  margin-bottom: 35px;
-  border: 1px solid #ff6a00;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 18px rgba(255, 106, 0, 0.25);
-  transition: 0.3s;
-}
-
-.video:hover {
-  transform: scale(1.01);
-  box-shadow: 0 0 25px rgba(255, 106, 0, 0.5);
-}
-
-/* IFRAME */
-.video iframe {
-  width: 100%;
-  height: 450px;
-  border: none;
-}
-
-/* TITULO */
-.label {
+/* ITEM */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   padding: 10px;
   background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.item:hover {
+  border-color: #ff6a00;
+  transform: scale(1.01);
+}
+
+.thumb {
+  width: 160px;
+  height: 90px;
+  background: #222;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 12px;
+}
+
+.title {
   color: #ff6a00;
   font-size: 14px;
-  border-top: 1px solid #ff6a00;
 }
 </style>
 </head>
 
 <body>
 
-<header>🎬 Mi Biblioteca Neon</header>
+<header>Mi Biblioteca Porno</header>
 
-<div class="container" id="videos"></div>
+<div class="search-box">
+  <input type="text" id="search" placeholder="Buscar por título...">
+</div>
+
+<!-- REPRODUCTOR -->
+<div class="player" id="playerBox">
+  <iframe id="player" allowfullscreen></iframe>
+</div>
+
+<!-- LISTA -->
+<div class="container" id="list"></div>
 
 <script>
-// 📦 EDITÁ SOLO ESTA LISTA
 const videos = [
-  {
-    titulo: "SWEETIE FOX - CHEEL",
-    url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09"
-  },
-  {
-    titulo: "SWEETIE FOX - RAVEN",
-    url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09"
-  }
+  { titulo: "SWEETIE FOX - CHEEL", url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09", actriz: "sweetie fox" },
+  { titulo: "SWEETIE FOX - RAVEN", url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09", actriz: "sweetie fox" },
+  { titulo: "SWEETIE FOX - ROUGUE", url: "https://hqq.ac/e/V1R4bEZGeUlBd2F3dEU3RHBydXBaUT09", actriz: "sweetie fox" },
+  { titulo: "SWEETIE FOX - JANE DOE", url: "https://hqq.ac/e/QVRRNDRiYU5ZT25ZK1dkb1EycjhnZz09", actriz: "sweetie fox" },
+  { titulo: "SWEETIE FOX - PSYLOCKE", url: "https://hqq.ac/e/VWZzTU9nbGd2Z3N5czFkZm91VzhCdz09", actriz: "sweetie fox" },
+  { titulo: "SWEETIE FOX - SCARLET WITCH", url: "https://hqq.ac/e/dFVod0sraTNlTnp4TTFabXA0YlBpUT09", actriz: "sweetie fox" }
 ];
 
-// 📺 RENDER AUTOMÁTICO
-const contenedor = document.getElementById("videos");
+const list = document.getElementById("list");
+const search = document.getElementById("search");
+const player = document.getElementById("player");
+const playerBox = document.getElementById("playerBox");
 
-videos.forEach(v => {
-  contenedor.innerHTML += `
-    <div class="video">
-      <iframe src="${v.url}" allowfullscreen></iframe>
-      <div class="label">${v.titulo}</div>
-    </div>
-  `;
+function render(filter = "") {
+  list.innerHTML = "";
+
+  videos
+    .filter(v => v.titulo.toLowerCase().includes(filter.toLowerCase()))
+    .forEach(v => {
+      list.innerHTML += `
+        <div class="item" onclick="openVideo('${v.url}')">
+          <div class="thumb">PREVIEW</div>
+          <div class="title">${v.titulo}</div>
+        </div>
+      `;
+    });
+}
+
+function openVideo(url) {
+  if (!url) return;
+
+  playerBox.style.display = "block";
+  player.src = url;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+search.addEventListener("input", e => {
+  render(e.target.value);
 });
+
+render();
 </script>
 
 </body>
