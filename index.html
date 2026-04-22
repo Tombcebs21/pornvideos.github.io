@@ -22,6 +22,11 @@ header {
   border-bottom: 1px solid #222;
 }
 
+header a {
+  color: #ff6a00;
+  text-decoration: none;
+}
+
 /* BUSCADOR */
 .search-box {
   display: flex;
@@ -40,6 +45,65 @@ header {
   outline: none;
 }
 
+/* GRID 5 COLUMNAS */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .container { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 800px) {
+  .container { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .container { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ITEM */
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.item:hover {
+  border-color: #ff6a00;
+  transform: scale(1.03);
+}
+
+.thumb {
+  width: 100%;
+  height: 90px;
+  background: #222;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 12px;
+}
+
+.title {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #ff6a00;
+  text-align: center;
+}
+
 /* PLAYER */
 .player {
   width: 100%;
@@ -55,7 +119,7 @@ header {
   border-radius: 10px;
 }
 
-/* BOTÓN VOLVER */
+/* BACK */
 .back-btn {
   display: none;
   text-align: center;
@@ -64,61 +128,19 @@ header {
   color: #ff6a00;
 }
 
-/* LISTA */
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-/* ITEM */
-.item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 10px;
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.item:hover {
-  border-color: #ff6a00;
-}
-
 /* RELACIONADOS */
 .related-title {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 20px auto 10px;
   color: #ff6a00;
   display: none;
-}
-
-.thumb {
-  width: 160px;
-  height: 90px;
-  background: #222;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  font-size: 12px;
-}
-
-.title {
-  color: #ff6a00;
 }
 </style>
 </head>
 
 <body>
 
-<header>Mi Biblioteca</header>
+<header><a href="index.html" style="color: white; text-decoration: none;">Mi Biblioteca</a></header>
 
 <div class="search-box">
   <input type="text" id="search" placeholder="Buscar por título...">
@@ -133,18 +155,25 @@ header {
 
 <div class="related-title" id="relatedTitle">Relacionados</div>
 
-<!-- LISTA -->
+<!-- LISTAS -->
 <div class="container" id="list"></div>
 <div class="container" id="related"></div>
 
 <script>
 const videos = [
-  { titulo: "CHEEL", url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09", actriz: "sweetie fox" },
-  { titulo: "RAVEN", url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09", actriz: "sweetie fox" },
-  { titulo: "ROUGUE", url: "https://hqq.ac/e/V1R4bEZGeUlBd2F3dEU3RHBydXBaUT09", actriz: "sweetie fox" },
-  { titulo: "JANE DOE", url: "https://hqq.ac/e/QVRRNDRiYU5ZT25ZK1dkb1EycjhnZz09", actriz: "sweetie fox" },
-  { titulo: "PSYLOCKE", url: "https://hqq.ac/e/VWZzTU9nbGd2Z3N5czFkZm91VzhCdz09", actriz: "sweetie fox" },
-  { titulo: "SCARLET WITCH", url: "https://hqq.ac/e/dFVod0sraTNlTnp4TTFabXA0YlBpUT09", actriz: "sweetie fox" }
+  { titulo: "SWEETIE FOX - CHEEL", url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09", actriz: "sweetie fox", letra: "c", img: "https://i0.wp.com/s12.netu.tv/flv/api/files/thumbs_new/2026/04/22/17768896425lb5o/17768896425lb5o-640x480-1.jpg"},
+  { titulo: "SWEETIE FOX - RAVEN", url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09", actriz: "sweetie fox", letra: "r", img: "https://i0.wp.com/s9.netu.tv/flv/api/files/thumbs_new/2026/04/22/1776889559omh90/1776889559omh90-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - ROUGUE", url: "https://hqq.ac/e/V1R4bEZGeUlBd2F3dEU3RHBydXBaUT09", actriz: "sweetie fox", letra: "r", img: "https://i0.wp.com/s8.netu.tv/flv/api/files/thumbs_new/2026/04/22/17768906325dt0k/17768906325dt0k-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - JANE DOE", url: "https://hqq.ac/e/QVRRNDRiYU5ZT25ZK1dkb1EycjhnZz09", actriz: "sweetie fox", letra: "j", img: "https://i0.wp.com/s8.netu.tv/flv/api/files/thumbs_new/2026/04/22/17768908768wa4g/17768908768wa4g-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - PSYLOCKE", url: "https://hqq.ac/e/VWZzTU9nbGd2Z3N5czFkZm91VzhCdz09", actriz: "sweetie fox", letra: "p", img: "https://i0.wp.com/s1.netu.tv/flv/api/files/thumbs_new/2026/04/22/1776890906e5rct/1776890906e5rct-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - SCARLET WITCH", url: "https://hqq.ac/e/dFVod0sraTNlTnp4TTFabXA0YlBpUT09", actriz: "sweetie fox", letra: "s", img: "https://i0.wp.com/s1.netu.tv/flv/api/files/thumbs_new/2026/04/22/1776891249xzrwd/1776891249xzrwd-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - TSUYU ASUI", url: "https://hqq.ac/e/TlpyQmtjRzFVWWRSVjhHeTJnVFhxUT09", actriz: "sweetie fox", letra: "t", img: "https://i0.wp.com/s13.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776891936vwfpr/1776891936vwfpr-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - LOLA BUNNY", url: "https://hqq.ac/e/VTh5bjFhNzZSZnRVZzByV1plcmc5Zz09", actriz: "sweetie fox", letra: "l", img: "https://i0.wp.com/s5.netu.tv/flv/api/files/thumbs_new/2026/04/23/177689181220cbu/177689181220cbu-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - ALBEDO", url: "", actriz: "sweetie fox", letra: "a", img: "" },
+  { titulo: "SWEETIE FOX - CHUN LEE", url: "https://hqq.ac/e/MXJpaHVZdDRlNjdOY1Bab0Z6enhjUT09", actriz: "sweetie fox", letra: "c", img: "https://i0.wp.com/s11.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776893125nmgg6/1776893125nmgg6-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - ANKHA", url: "https://hqq.ac/e/c3c3UDJ4NVcrS0lCc0JJOEYwcitIZz09", actriz: "sweetie fox", letra: "a", img: "https://i0.wp.com/s13.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776892809xd2g2/1776892809xd2g2-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - ZELDA", url: "https://hqq.ac/e/Qzc4TFVzS2RFL2R0WEkxWWJJUnAydz09", actriz: "sweetie fox", letra: "z", img: "https://i0.wp.com/s11.netu.tv/flv/api/files/thumbs_new/2026/04/23/1776893088510l6/1776893088510l6-640x480-1.jpg" },
+  { titulo: "SWEETIE FOX - TATSUMAKI", url: "", actriz: "sweetie fox", letra: "t", img: "" }
 ];
 
 const list = document.getElementById("list");
@@ -160,22 +189,23 @@ const relatedTitle = document.getElementById("relatedTitle");
 function render(filter = "") {
   list.innerHTML = "";
 
-  videos
+  const ordenados = [...videos]
     .filter(v => v.titulo.toLowerCase().includes(filter.toLowerCase()))
-    .forEach(v => {
-      list.innerHTML += `
-        <div class="item" onclick="openVideo('${v.url}', '${v.actriz}')">
-          <div class="thumb">PREVIEW</div>
-          <div class="title">${v.titulo}</div>
-        </div>
-      `;
-    });
+    .sort((a, b) => a.letra.localeCompare(b.letra));
+
+  ordenados.forEach(v => {
+    list.innerHTML += `
+      <div class="item" onclick="openVideo('${v.url}', '${v.actriz}')">
+        <div class="thumb">${v.img}</div>
+        <div class="title">${v.titulo}</div>
+      </div>
+    `;
+  });
 }
 
 function openVideo(url, actriz) {
   if (!url) return;
 
-  // limpiar UI
   list.style.display = "none";
   search.value = "";
 
@@ -184,7 +214,6 @@ function openVideo(url, actriz) {
 
   player.src = url;
 
-  // relacionados
   const rel = videos.filter(v => v.actriz === actriz && v.url !== url);
 
   related.innerHTML = "";
