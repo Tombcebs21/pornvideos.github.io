@@ -55,6 +55,15 @@ header {
   border-radius: 10px;
 }
 
+/* BOTÓN VOLVER */
+.back-btn {
+  display: none;
+  text-align: center;
+  margin: 10px;
+  cursor: pointer;
+  color: #ff6a00;
+}
+
 /* LISTA */
 .container {
   max-width: 900px;
@@ -75,12 +84,18 @@ header {
   border: 1px solid #222;
   border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .item:hover {
   border-color: #ff6a00;
-  transform: scale(1.01);
+}
+
+/* RELACIONADOS */
+.related-title {
+  max-width: 900px;
+  margin: 20px auto 10px;
+  color: #ff6a00;
+  display: none;
 }
 
 .thumb {
@@ -97,41 +112,50 @@ header {
 
 .title {
   color: #ff6a00;
-  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>Mi Biblioteca Porno</header>
+<header>Mi Biblioteca</header>
 
 <div class="search-box">
   <input type="text" id="search" placeholder="Buscar por título...">
 </div>
 
-<!-- REPRODUCTOR -->
+<div class="back-btn" id="backBtn">⬅ Volver</div>
+
+<!-- PLAYER -->
 <div class="player" id="playerBox">
   <iframe id="player" allowfullscreen></iframe>
 </div>
 
+<div class="related-title" id="relatedTitle">Relacionados</div>
+
 <!-- LISTA -->
 <div class="container" id="list"></div>
+<div class="container" id="related"></div>
 
 <script>
 const videos = [
-  { titulo: "SWEETIE FOX - CHEEL", url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09", actriz: "sweetie fox" },
-  { titulo: "SWEETIE FOX - RAVEN", url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09", actriz: "sweetie fox" },
-  { titulo: "SWEETIE FOX - ROUGUE", url: "https://hqq.ac/e/V1R4bEZGeUlBd2F3dEU3RHBydXBaUT09", actriz: "sweetie fox" },
-  { titulo: "SWEETIE FOX - JANE DOE", url: "https://hqq.ac/e/QVRRNDRiYU5ZT25ZK1dkb1EycjhnZz09", actriz: "sweetie fox" },
-  { titulo: "SWEETIE FOX - PSYLOCKE", url: "https://hqq.ac/e/VWZzTU9nbGd2Z3N5czFkZm91VzhCdz09", actriz: "sweetie fox" },
-  { titulo: "SWEETIE FOX - SCARLET WITCH", url: "https://hqq.ac/e/dFVod0sraTNlTnp4TTFabXA0YlBpUT09", actriz: "sweetie fox" }
+  { titulo: "CHEEL", url: "https://hqq.ac/e/Q1RhVHZNdDhLZTgwWURYMXNFQTNDZz09", actriz: "sweetie fox" },
+  { titulo: "RAVEN", url: "https://hqq.ac/e/Q0JxQ3NKdEROenV2akh1QS9ldWhxZz09", actriz: "sweetie fox" },
+  { titulo: "ROUGUE", url: "https://hqq.ac/e/V1R4bEZGeUlBd2F3dEU3RHBydXBaUT09", actriz: "sweetie fox" },
+  { titulo: "JANE DOE", url: "https://hqq.ac/e/QVRRNDRiYU5ZT25ZK1dkb1EycjhnZz09", actriz: "sweetie fox" },
+  { titulo: "PSYLOCKE", url: "https://hqq.ac/e/VWZzTU9nbGd2Z3N5czFkZm91VzhCdz09", actriz: "sweetie fox" },
+  { titulo: "SCARLET WITCH", url: "https://hqq.ac/e/dFVod0sraTNlTnp4TTFabXA0YlBpUT09", actriz: "sweetie fox" }
 ];
 
 const list = document.getElementById("list");
+const related = document.getElementById("related");
 const search = document.getElementById("search");
+
 const player = document.getElementById("player");
 const playerBox = document.getElementById("playerBox");
+
+const backBtn = document.getElementById("backBtn");
+const relatedTitle = document.getElementById("relatedTitle");
 
 function render(filter = "") {
   list.innerHTML = "";
@@ -140,7 +164,7 @@ function render(filter = "") {
     .filter(v => v.titulo.toLowerCase().includes(filter.toLowerCase()))
     .forEach(v => {
       list.innerHTML += `
-        <div class="item" onclick="openVideo('${v.url}')">
+        <div class="item" onclick="openVideo('${v.url}', '${v.actriz}')">
           <div class="thumb">PREVIEW</div>
           <div class="title">${v.titulo}</div>
         </div>
@@ -148,13 +172,44 @@ function render(filter = "") {
     });
 }
 
-function openVideo(url) {
+function openVideo(url, actriz) {
   if (!url) return;
 
+  // limpiar UI
+  list.style.display = "none";
+  search.value = "";
+
   playerBox.style.display = "block";
+  backBtn.style.display = "block";
+
   player.src = url;
+
+  // relacionados
+  const rel = videos.filter(v => v.actriz === actriz && v.url !== url);
+
+  related.innerHTML = "";
+  relatedTitle.style.display = rel.length ? "block" : "none";
+
+  rel.forEach(v => {
+    related.innerHTML += `
+      <div class="item" onclick="openVideo('${v.url}', '${v.actriz}')">
+        <div class="thumb">PREVIEW</div>
+        <div class="title">${v.titulo}</div>
+      </div>
+    `;
+  });
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+backBtn.onclick = () => {
+  playerBox.style.display = "none";
+  backBtn.style.display = "none";
+  related.innerHTML = "";
+  relatedTitle.style.display = "none";
+  list.style.display = "grid";
+  player.src = "";
+};
 
 search.addEventListener("input", e => {
   render(e.target.value);
