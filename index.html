@@ -213,7 +213,7 @@ function render(filter = "") {
   ordenados.forEach(v => {
     list.innerHTML += `
       <div class="item" onclick="openVideo('${v.url}', '${v.actriz}')">
-        <div class="thumb">PREVIEW</div>
+        <div class="thumb"><img src"${v.image}"></div>
         <div class="title">${v.titulo}</div>
       </div>
     `;
